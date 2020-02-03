@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - wifi (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - wifi (from `.symlinks/plugins/wifi/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  wifi:
+    :path: ".symlinks/plugins/wifi/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  wifi: d7d77c94109e36c4175d845f0a5964eadba71060
+
+PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+
+COCOAPODS: 1.8.4
