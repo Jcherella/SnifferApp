@@ -1,6 +1,6 @@
-# snifferapp
+# Sniffer App
 
-A new Flutter project.
+An application that will allow you to scan devices on a network and attempt to give you more information about said devices. 
 
 ## Getting Started
 
