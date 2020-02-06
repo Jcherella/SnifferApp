@@ -1,6 +1,6 @@
 # Sniffer App
 
-An application that will allow you to scan devices on a network and attempt to give you more information about said devices. 
+Sniffer is a mobile for Andriod and IOS application that will allow users to scan networks for devices and get priliminary information on the devices. It will attempt to figure out the Company who constructed them and model of device.
 
 ## Getting Started
 
@@ -25,3 +25,11 @@ Flutter Sample Projects:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Contributors
+
+ - [Jack Cherella](https://github.com/Jcherella)
+ - [Sumanth Gajjala](https://github.com/gajjas)
+ - [Cameron Goode](https://github.com/randomcascade)
+ - [Ryan Lehman](https://github.com/rlehman221)
+ - [Joshua Wu](https://github.com/123joshuawu)
