@@ -8,6 +8,11 @@ class Scanning extends StatefulWidget {
 class _ScanningState extends State<Scanning> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(8),
+        children: <Widget>[],
+      ),
+    );
   }
 }
