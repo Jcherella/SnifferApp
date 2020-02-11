@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "550240017332",
+    "firebase_url": "https://scanner-app-c9841.firebaseio.com",
+    "project_id": "scanner-app-c9841",
+    "storage_bucket": "scanner-app-c9841.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550240017332:android:93a503fb6fef7b2fe370e1",
+        "android_client_info": {
+          "package_name": "com.example.snifferapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550240017332-647j8mmtjvmdfnrqihpc5e7gllj0bh7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAphJvL6cJdaTnMKFe5nd9oxsZlz2H6ut0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550240017332-647j8mmtjvmdfnrqihpc5e7gllj0bh7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
