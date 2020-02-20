@@ -3,6 +3,7 @@ class NetworkDevice {
   var macAddress;
 
   NetworkDevice(this.iPAddress, this.macAddress);
+
   String getIP() {
     return this.iPAddress;
   }
