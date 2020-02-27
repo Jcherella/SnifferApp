@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class MainActivity extends FlutterActivity {
-  private static final String CHANNEL = "services/arp_table";
+  private static final String CHANNEL = "services/networkinfo";
 
   @Override
   public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {

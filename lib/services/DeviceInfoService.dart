@@ -5,17 +5,20 @@ import 'dart:developer';
 
 import 'package:snifferapp/models/ArpEntry.dart';
 
-/// This class is designed to interface with the Android 9
-/// platform specific code that reads and parses the ARP table
-/// located in /proc/net/arp
-class ArpService {
-  final MethodChannel _androidArpService;
+/// This class is designed to retrieve device information
+class DeviceInfoService {
+  final MethodChannel _networkInfoChannel;
 
   List<ArpEntry> _arpEntries;
   DateTime _arpEntriesLastUpdated;
 
-  ArpService():
-    this._androidArpService = const MethodChannel('services/arp_table');
+  // Sets up class to be singleton
+  DeviceInfoService._privateConstructor():
+        this._networkInfoChannel = const MethodChannel('services/networkinfo');
+  static final DeviceInfoService _instance = DeviceInfoService._privateConstructor();
+  factory DeviceInfoService() {
+    return _instance;
+  }
 
   /// Loads ARP entries from ARP table
   /// Returns a Future that returns upon loading the ARP table and returns a
@@ -30,7 +33,7 @@ class ArpService {
       log("Reading ARP entries from ARP table");
 
       arpEntryStrings = new List<String>.from(
-          await this._androidArpService.invokeMethod('getArpTable'));
+          await this._networkInfoChannel.invokeMethod('getArpTable'));
       log("ARP entries read: " + arpEntryStrings.toString());
 
       for (var i = 1; i < arpEntryStrings.length; i++) {
@@ -62,31 +65,31 @@ EXAMPLE USAGE OF MOCK ARP SERVICE
 
 void <function_name> async {
     ...
-    final MockArpService mas = new MockArpService();
+    final MockDeviceInfoService mdis = new MockDeviceInfoService();
     log("Loading ARP entries");
-    await mas.loadArpTable();
+    await mdis.loadArpTable();
     log("Got ARP entries:");
-    for (var arpEntry in mas.arpEntries) {
+    for (var arpEntry in mdis.arpEntries) {
       log(arpEntry.toString());
     }
-    log("Last updated: ${mas.arpEntriesLastUpdated.toIso8601String()}");
+    log("Last updated: ${mdis.arpEntriesLastUpdated.toIso8601String()}");
     ...
 }
 
 
  */
 
-class MockArpService extends ArpService {
-  MockArpService();
+class MockDeviceInfoService {
+  final _inst;
+  MockDeviceInfoService():
+    this._inst = new DeviceInfoService();
 
-  @override
   Future<bool> loadArpTable() async {
     await Future.delayed(Duration(seconds: 1));
-    this._arpEntriesLastUpdated = DateTime.now();
+    this._inst._arpEntriesLastUpdated = DateTime.now();
     return true;
   }
 
-  @override
   List<ArpEntry> get arpEntries => [
     new AndroidArpEntry(
         '129.161.49.254',
