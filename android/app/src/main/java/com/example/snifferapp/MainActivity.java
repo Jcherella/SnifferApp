@@ -1,6 +1,15 @@
 package com.example.snifferapp;
 
+import android.content.Context;
+
+import android.net.Network;
+import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.LinkAddress;
+import android.net.RouteInfo;
+
 import androidx.annotation.NonNull;
+
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
@@ -20,23 +29,41 @@ public class MainActivity extends FlutterActivity {
     new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
             .setMethodCallHandler(
               (call, result) -> {
-                  if (call.method.equals("getArpTable")) {
-                    String arpTableContent = "";
-                    ArrayList<String> arpEntries = new ArrayList<String>();
-                    try {
-                        String line;
-                        BufferedReader br = new BufferedReader(new FileReader("/proc/net/arp"));
-                        while ((line = br.readLine()) != null) {
-                            arpTableContent += line;
-                            arpEntries.add(line);
-                        }
-                        result.success(arpEntries);
-//                        result.success(arpTableContent);
-                    } catch (Exception e) {
-                        result.error("UNAVAILBLE", e.toString(), e);
-                    }
-                  } else {
-                      result.notImplemented();
+                  try {
+                      if (call.method.equals("getArpTable")) {
+                          String arpTableContent = "";
+                          ArrayList<String> arpEntries = new ArrayList<String>();
+
+                          String line;
+                          BufferedReader br = new BufferedReader(new FileReader("/proc/net/arp"));
+                          while ((line = br.readLine()) != null) {
+                              arpTableContent += line;
+                              arpEntries.add(line);
+                          }
+                          result.success(arpEntries);
+
+                      } else if (call.method.equals("getNetworkInterfaceInfo")) {
+                          ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                          Network[] networks = cm.getAllNetworks();
+                          ArrayList<String> networkStrings = new ArrayList<String>();
+
+                          for (int i = 0; i < networks.length; i++) {
+                              networkStrings.add("|");
+                              LinkProperties lp = cm.getLinkProperties(networks[i]);
+                              networkStrings.add(lp.getInterfaceName());
+                              for (LinkAddress la : lp.getLinkAddresses()) {
+                                  networkStrings.add(la.toString());
+                              }
+                              for (RouteInfo ri : lp.getRoutes()) {
+                                  networkStrings.add(ri.toString());
+                              }
+                          }
+                          result.success(networkStrings);
+                      } else {
+                          result.notImplemented();
+                      }
+                  } catch (Exception e) {
+                      result.error("ERROR", e.toString(), e);
                   }
               }
             );
