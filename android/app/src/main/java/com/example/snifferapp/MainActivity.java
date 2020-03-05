@@ -51,12 +51,14 @@ public class MainActivity extends FlutterActivity {
                               networkStrings.add("|");
                               LinkProperties lp = cm.getLinkProperties(networks[i]);
                               networkStrings.add(lp.getInterfaceName());
+                              // Retrieve network addresses
                               for (LinkAddress la : lp.getLinkAddresses()) {
                                   networkStrings.add(la.toString());
                               }
-                              for (RouteInfo ri : lp.getRoutes()) {
-                                  networkStrings.add(ri.toString());
-                              }
+                              // Retrieve routing table
+//                              for (RouteInfo ri : lp.getRoutes()) {
+//                                  networkStrings.add(ri.toString());
+//                              }
                           }
                           result.success(networkStrings);
                       } else {
