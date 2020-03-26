@@ -55,10 +55,6 @@ public class MainActivity extends FlutterActivity {
                               for (LinkAddress la : lp.getLinkAddresses()) {
                                   networkStrings.add(la.toString());
                               }
-                              // Retrieve routing table
-//                              for (RouteInfo ri : lp.getRoutes()) {
-//                                  networkStrings.add(ri.toString());
-//                              }
                           }
                           result.success(networkStrings);
                       } else {
