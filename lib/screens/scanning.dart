@@ -11,7 +11,13 @@ class _ScanningState extends State<Scanning> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: ,
+        floatingActionButton: RaisedButton(
+            onPressed: () { Navigator.pushNamed(context, '/'); },
+            child: Text(
+              'SCAN',
+              style: TextStyle(fontSize: 20)
+            ),
+          ),
         body: SafeArea(
             child: NetworkList([
       for (var i = 0; i < 100; i++)
