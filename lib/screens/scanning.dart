@@ -11,6 +11,7 @@ class _ScanningState extends State<Scanning> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: ,
         body: SafeArea(
             child: NetworkList([
       for (var i = 0; i < 100; i++)
