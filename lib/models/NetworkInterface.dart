@@ -6,9 +6,9 @@ import 'dart:io';
 class NetworkInterface {
   final String name;
   final InternetAddress ip;
-  final int subnetMask;
+  final int cidr;
 
-  NetworkInterface(this.name, ipAddress, this.subnetMask):
+  NetworkInterface(this.name, ipAddress, this.cidr):
     this.ip = new InternetAddress(ipAddress);
 
 
@@ -16,7 +16,8 @@ class NetworkInterface {
   String toString () {
     return '''
     NetworkInterface ${this.name}
-    Subnet: ${this.ip.address}/${this.subnetMask}
+    IP Address: ${this.ip.address}
+    CIDR block: ${this.cidr}
     ''';
   }
 }
