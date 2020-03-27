@@ -2,6 +2,25 @@ import 'dart:io';
 
 import 'dart:typed_data';
 
+/*
+// Example usage
+// Instantiate an instance of DeviceInfoService to load
+// information on the device's network interface
+DeviceInfoService device = new DeviceInfoService();
+await device.loadNetworkInterfaces();
+
+// Returns a list of network interfaces but for our case
+// we can just use the first entry
+// (Most cases probably will only have one entry)
+NetworkInterface interface = device.networkInterfaces[0];
+
+// Get start and end address range of current subnet
+List<InternetAddress> range = calculateSubnetIpRange(interface.ip, interface.cidr);
+
+// Generate a list of IP addresses in the range exclusive
+List<InternetAddress> addresses = generateIpAddresses(range[0], range[1]);
+ */
+
 /// Generates a list of IP addresses between start and end exclusive
 /// NOTE: both start and end are exclusive as it is designed to work
 /// with subnet ranges. This is desired since we are looking to target
