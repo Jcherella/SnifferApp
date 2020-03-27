@@ -1,14 +1,14 @@
 class NetworkDevice {
-  var iPAddress;
-  var macAddress;
+  var _iPAddress;
+  var _macAddress;
 
-  NetworkDevice(this.iPAddress, this.macAddress);
+  NetworkDevice(this._iPAddress, this._macAddress);
 
   String getIP() {
-    return this.iPAddress;
+    return this._iPAddress;
   }
 
   String getMAC() {
-    return this.macAddress;
+    return this._macAddress;
   }
 }
