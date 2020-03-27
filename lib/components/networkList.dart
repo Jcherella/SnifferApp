@@ -6,11 +6,6 @@ class NetworkList extends StatefulWidget {
   final List<NetworkDevice> networkList;
 
   NetworkList(this.networkList);
-  /* void createMockList() {
-    this._NetworkListState([for (var i = 0; i < 100; i++) 
-    new NetworkDevice("IP goes here", "MAC goes here");
-   ]);
-   } */
 
   @override
   _NetworkListState createState() => _NetworkListState(networkList);

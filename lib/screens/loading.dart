@@ -10,8 +10,10 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5), () => Navigator.pushNamed(context, '/scanPage'));
+    Timer(
+        Duration(seconds: 5), () => Navigator.pushNamed(context, '/scanPage'));
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
