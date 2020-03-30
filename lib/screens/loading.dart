@@ -22,9 +22,10 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-      child: SpinKitRing(
-        color: Colors.blue,
-        size: 50.0,
+        //Loading Spinner
+        child: SpinKitRing(
+          color: Colors.blue,
+          size: 150.0,
         ),
       ),
     );

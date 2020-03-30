@@ -14,20 +14,27 @@ class _ScanningState extends State<Scanning> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          //Bottom Bar
           bottomNavigationBar: BottomAppBar(
             color: Colors.blue,
             child: Container(height: 50.0),
           ),
+          //Button Location
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          //Button Functionality and look
           floatingActionButton: RaisedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
               child: Text('SCAN', style: TextStyle(fontSize: 20)),
           ),
+          //Display of the list
           body: NetworkList([
               for (var i = 0; i < 100; i++)
                 new ArpEntry("IP goes here", "MAC goes here")
-            ])));
+          ])
+
+        )
+      );
   }
 }
