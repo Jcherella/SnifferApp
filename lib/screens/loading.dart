@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 //Loading Screen: First Screen to see
 class Loading extends StatefulWidget {
@@ -21,7 +22,11 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text("Loading Page"),
+        //Loading Spinner
+        child: SpinKitRing(
+          color: Colors.blue,
+          size: 150.0,
+        ),
       ),
     );
   }
