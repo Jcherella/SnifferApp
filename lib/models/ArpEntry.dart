@@ -1,16 +1,20 @@
+import 'dart:io';
+
 /// This class holds the necessary information for an ARP entry
 /// At its core, an ARP entry must contain an IP address and its
 /// corresponding MAC address
 class ArpEntry {
-  final String ipAddress, macAddress;
+  final String macAddress;
+  final InternetAddress ip;
 
-  const ArpEntry(this.ipAddress, this.macAddress);
+  ArpEntry(ipAddress, this.macAddress):
+    this.ip = new InternetAddress(ipAddress);
 
   @override
   String toString() {
     return '''
     ArpEntry
-    IP address: ${this.ipAddress}
+    IP address: ${this.ip.address}
     HW address: ${this.macAddress}
     ''';
   }
@@ -31,7 +35,7 @@ class ArpEntry {
 class AndroidArpEntry extends ArpEntry {
   final String hwType, flags, mask, device;
 
-  const AndroidArpEntry(
+  AndroidArpEntry(
       ipAddress, this.hwType, this.flags, hwAddress, this.mask, this.device)
       : super(ipAddress, hwAddress);
 
@@ -44,7 +48,7 @@ class AndroidArpEntry extends ArpEntry {
   String toString() {
     return '''
     AndroidArpEntry
-    IP address: ${this.ipAddress}
+    IP address: ${this.ip.address}
     HW type: ${this.hwType}
     Flags: ${this.flags}
     HW address: ${this.macAddress}
