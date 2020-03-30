@@ -31,10 +31,7 @@ class _ScanningState extends State<Scanning> {
           //Display of the list
           body: NetworkList([
               for (var i = 0; i < 100; i++)
-                new ArpEntry("IP goes here", "MAC goes here")
-          ])
-
-        )
-      );
+                new ArpEntry([10,0,0,i].join("."), "MAC goes here")
+            ])));
   }
 }
