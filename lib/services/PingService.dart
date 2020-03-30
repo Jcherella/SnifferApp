@@ -2,6 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:developer';
 
+import 'package:snifferapp/services/IpUtils.dart';
+import 'package:snifferapp/models/NetworkInterface.dart';
+
 /// [NetworkAnalyzer] class returns instances of [NetworkAddress].
 ///
 /// Found ip addresses will have [exists] == true field.
@@ -18,6 +21,13 @@ class DiscoveryService {
   static final DiscoveryService _instance = DiscoveryService._privateConstructor();
   factory DiscoveryService() {
     return _instance;
+  }
+
+  static discoverNetwork(NetworkInterface networkInterface) {
+    List<InternetAddress> range = calculateSubnetIpRange(
+        networkInterface.ip, networkInterface.cidr);
+    List<InternetAddress> localAddresses = generateIpAddresses(range[0], range[1]);
+    return DiscoveryService.discoverIPAddresses(localAddresses, 80);
   }
 
   /// Pings a given list of subnets on a given port.
