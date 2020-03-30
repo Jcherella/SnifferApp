@@ -4,8 +4,9 @@ import 'package:snifferapp/screens/scanning.dart';
 
 void main() => runApp(MaterialApp(
       initialRoute: '/scanPage',
+      //Routes
       routes: {
-        '/': (context) => Loading(),
-        '/scanPage': (context) => Scanning(),
+        '/': (context) => Loading(), //Loading Screen
+        '/scanPage': (context) => Scanning(), //Scanning Screen
       },
     ));

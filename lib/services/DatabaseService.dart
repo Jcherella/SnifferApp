@@ -6,7 +6,8 @@ class DatabaseService {
 
   // Sets up class to be singleton
   DatabaseService._privateConstructor();
-  static final DatabaseService _instance = DatabaseService._privateConstructor();
+  static final DatabaseService _instance =
+      DatabaseService._privateConstructor();
   factory DatabaseService() {
     return _instance;
   }
@@ -17,12 +18,11 @@ class DatabaseService {
   // Throws 'NoSuchMethodError' if mac address is not in DB
   Future<String> lookupVendor(String macAddress) async {
     try {
-      return await databaseInstance.document(macAddress).get().then((documentSnapshot) => 
-      documentSnapshot.data['vendor'].toString());
-    } on NoSuchMethodError catch(e) {
+      return await databaseInstance.document(macAddress).get().then(
+          (documentSnapshot) => documentSnapshot.data['vendor'].toString());
+    } on NoSuchMethodError catch (e) {
       log("Failed to find mac address in database: " + e.toString());
-    }
-    catch (e) {
+    } catch (e) {
       log("Failed to perform vendor lookup: " + e.toString());
     }
     return 'null';
