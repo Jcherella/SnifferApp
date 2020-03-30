@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:developer';
 
 /// [NetworkAnalyzer] class returns instances of [NetworkAddress].
 ///
@@ -21,7 +22,7 @@ class DiscoveryService {
 
   /// Pings a given list of subnets on a given port.
   static discoverIPAddresses(
-    List ipAdresses,
+    List<InternetAddress> ipAdresses,
     int port, {
     Duration timeout = const Duration(seconds: 5),
   }) {
@@ -30,7 +31,7 @@ class DiscoveryService {
     }
     final futures = <Future<Socket>>[];
 
-    for (String ipAddr in ipAdresses) {
+    for (InternetAddress ipAddr in ipAdresses) {
       final Future<Socket> f = _ping(ipAddr, port, timeout);
       futures.add(f);
       f.then((socket) {
@@ -42,7 +43,7 @@ class DiscoveryService {
 
         // Check if connection timed out or we got one of predefined errors
         if (e.osError == null || _errorCodes.contains(e.osError.errorCode)) {
-          print("Connection: $e");
+          log("Connection: $e");
         } else {
           // Error 23,24: Too many open files in system
           throw e;
@@ -50,12 +51,13 @@ class DiscoveryService {
       });
     }
 
-    Future.wait<Socket>(futures)
-        .then<void>((sockets) => print("Finished Discovering"))
-        .catchError((dynamic e) => print("Error Discovering"));
+    return Future.wait<Socket>(futures);
+//    Future.wait<Socket>(futures)
+//        .then<void>((sockets) => print("Finished Discovering"))
+//        .catchError((dynamic e) => print("Error Discovering"));
   }
 
-  static Future<Socket> _ping(String host, int port, Duration timeout) {
+  static Future<Socket> _ping(InternetAddress host, int port, Duration timeout) {
     return Socket.connect(host, port, timeout: timeout).then((socket) {
       return socket;
     });
