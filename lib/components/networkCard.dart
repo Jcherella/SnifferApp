@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../models/networkDevice.dart';
+import 'package:snifferapp/models/ArpEntry.dart';
 
+//Portrays each entry or device in the ARP data as a card with the IP and MAC
 class NetworkCard extends StatefulWidget {
-  final NetworkDevice networkDevice;
+  final ArpEntry networkDevice;
 
+  //Initializer
   NetworkCard(this.networkDevice);
 
   @override
@@ -11,9 +13,12 @@ class NetworkCard extends StatefulWidget {
 }
 
 class _NetworkCardState extends State<NetworkCard> {
-  NetworkDevice networkDevice;
+  ArpEntry networkDevice;
+
+  //Initializer
   _NetworkCardState(this.networkDevice);
 
+  //Building the widget
   @override
   Widget build(BuildContext context) {
     return Card(

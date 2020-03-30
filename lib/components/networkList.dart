@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:snifferapp/components/networkCard.dart';
-import 'package:snifferapp/models/networkDevice.dart';
+import 'package:snifferapp/models/ArpEntry.dart';
 
+//Creates a list view (gives scrollability) to portray all of the NetworkCards (Devices on the network)
 class NetworkList extends StatefulWidget {
-  final List<NetworkDevice> networkList;
+  final List<ArpEntry> networkList;
 
+  //Initializer
   NetworkList(this.networkList);
 
   @override
@@ -12,13 +14,16 @@ class NetworkList extends StatefulWidget {
 }
 
 class _NetworkListState extends State<NetworkList> {
-  List<NetworkDevice> networkList;
+  List<ArpEntry> networkList;
+
+  //Initializer
   _NetworkListState(this.networkList);
 
+  //Building the widget
   @override
   Widget build(BuildContext context) {
     return ListView(padding: const EdgeInsets.all(8), children: <Widget>[
-      for (NetworkDevice device in networkList) NetworkCard(device)
+      for (ArpEntry device in networkList) NetworkCard(device)
     ]);
   }
 }
