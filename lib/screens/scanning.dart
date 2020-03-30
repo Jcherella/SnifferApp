@@ -12,15 +12,22 @@ class _ScanningState extends State<Scanning> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            floatingActionButton: RaisedButton(
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.blue,
+            child: Container(height: 50.0),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: RaisedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
               child: Text('SCAN', style: TextStyle(fontSize: 20)),
-            ),
-            body: NetworkList([
+          ),
+          body: NetworkList([
               for (var i = 0; i < 100; i++)
                 new NetworkDevice("IP goes here", "MAC goes here")
-            ])));
+          ])
+        )
+      );
   }
 }

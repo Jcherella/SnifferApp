@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -18,7 +19,10 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text("Loading Page"),
+      child: SpinKitRing(
+        color: Colors.blue,
+        size: 50.0,
+        ),
       ),
     );
   }
