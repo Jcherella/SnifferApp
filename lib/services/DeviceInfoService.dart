@@ -12,15 +12,18 @@ import 'package:snifferapp/models/NetworkInterface.dart';
 class DeviceInfoService {
   final MethodChannel _networkInfoChannel;
 
-  List<ArpEntry> _arpEntries;
+  List<ArpEntry> _arpEntries = new List();
   DateTime _arpEntriesLastUpdated;
 
-  List<NetworkInterface> _networkInterfaces;
+  List<NetworkInterface> _networkInterfaces = new List();
   DateTime _networkInterfacesLastUpdated;
 
   // Sets up class to be singleton
   DeviceInfoService._privateConstructor():
-        this._networkInfoChannel = const MethodChannel('services/networkinfo');
+        this._networkInfoChannel = const MethodChannel('services/networkinfo') {
+    this.loadArpTable();
+    this.loadNetworkInterfaces();
+  }
   static final DeviceInfoService _instance = DeviceInfoService._privateConstructor();
   factory DeviceInfoService() {
     return _instance;
