@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
 
 class DatabaseService {
   final databaseInstance = Firestore.instance.collection("MAC_Address");
@@ -26,6 +27,22 @@ class DatabaseService {
       log("Failed to perform vendor lookup: " + e.toString());
     }
     return 'null';
+  }
+
+  Future<String> requestVendor(String macAddress) async {
+    var url = 'http://api.macvendors.com/';
+    //The url we want to send our requests to.
+    var key = """Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImp0aSI6IjQyZDM4ZTQ0LTEwNmEtNDQzZC05ZDQ3LTIyMmY5ODQwZmNhNCJ9.eyJpc3MiOiJtYWN2ZW5kb3JzIiwiYXVkIjoibWFjdmVuZG9ycyIsImp0aSI6IjQyZDM4ZTQ0LTEwNmEtNDQzZC05ZDQ3LTIyMmY5ODQwZmNhNCIsImlhdCI6MTU4NTU4MzY1MywiZXhwIjoxOTAwMDc5NjUzLCJzdWIiOiI2NTY1IiwidHlwIjoiYWNjZXNzIn0.MiRX-6lrP-GvNWvY4mglnpL3O8MnH3ZlY-rJyJOaJSuP4X6IWYlyXLKR5AnSXlEpItbkFzBYawxPD2EqH0S8Sw""";
+    //The key is our key. It gives us 1000 requests per day. Clunky but thus far this is the only formatting that works.
+    var lookupResponse = await http.get(url + macAddress, headers: {"Authorization" : key});
+    //We send the request above and wait for it to finish. Use double quotes in requests.
+    var returnString = 'null';
+    if(lookupResponse.statusCode==200) {
+      // If the request returned successfully (i.e. status=200)
+      returnString=lookupResponse.body;
+      // Set the return value to the body of the response.
+    }
+    return returnString;
   }
 
   /*
