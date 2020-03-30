@@ -21,7 +21,7 @@ class ArpEntry {
 
   //Returns the IP Address
   String getIP() {
-    return this.ipAddress;
+    return this.ip.address;
   }
 
   //Returns the MAC Address
