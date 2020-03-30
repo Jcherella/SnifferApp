@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:snifferapp/components/networkList.dart';
-import 'package:snifferapp/models/networkDevice.dart';
+import 'package:snifferapp/models/ArpEntry.dart';
 
+//Scanning Screen: portrays the devices on the network by IP and MAC(all the ARP table)
 class Scanning extends StatefulWidget {
   @override
   _ScanningState createState() => _ScanningState();
 }
 
 class _ScanningState extends State<Scanning> {
+  //Building the Screen
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +22,7 @@ class _ScanningState extends State<Scanning> {
             ),
             body: NetworkList([
               for (var i = 0; i < 100; i++)
-                new NetworkDevice([10,0,0,i].join("."), "MAC goes here")
+                new ArpEntry([10,0,0,i].join("."), "MAC goes here")
             ])));
   }
 }

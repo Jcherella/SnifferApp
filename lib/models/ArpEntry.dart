@@ -18,6 +18,16 @@ class ArpEntry {
     HW address: ${this.macAddress}
     ''';
   }
+
+  //Returns the IP Address
+  String getIP() {
+    return this.ip.address;
+  }
+
+  //Returns the MAC Address
+  String getMAC() {
+    return this.macAddress;
+  }
 }
 
 /// This class represents the data contained in the ARP table
@@ -25,20 +35,14 @@ class ArpEntry {
 class AndroidArpEntry extends ArpEntry {
   final String hwType, flags, mask, device;
 
-   AndroidArpEntry(
-      ipAddress,
-      this.hwType,
-      this.flags,
-      hwAddress,
-      this.mask,
-      this.device
-      ): super(ipAddress, hwAddress);
+  AndroidArpEntry(
+      ipAddress, this.hwType, this.flags, hwAddress, this.mask, this.device)
+      : super(ipAddress, hwAddress);
 
-  AndroidArpEntry.spread(List<String> arr):
-      this(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+  AndroidArpEntry.spread(List<String> arr)
+      : this(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
 
-  AndroidArpEntry.raw(String str):
-      this.spread(str.split(new RegExp('\\s+')));
+  AndroidArpEntry.raw(String str) : this.spread(str.split(new RegExp('\\s+')));
 
   @override
   String toString() {
