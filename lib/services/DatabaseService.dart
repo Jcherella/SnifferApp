@@ -22,7 +22,14 @@ class DatabaseService {
       return await databaseInstance.document(macAddress).get().then(
           (documentSnapshot) => documentSnapshot.data['vendor'].toString());
     } on NoSuchMethodError catch (e) {
-      log("Failed to find mac address in database: " + e.toString());
+      log("Failed to find mac address in database");
+      log("Using API to find vendor...");
+      String vendor = await requestVendor(macAddress);
+      if (vendor != 'null') {
+        databaseInstance.document(macAddress).setData({'vendor': '$vendor'});
+        return vendor;
+      }
+      log("No vendor found with API");
     } catch (e) {
       log("Failed to perform vendor lookup: " + e.toString());
     }
