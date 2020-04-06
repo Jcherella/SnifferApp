@@ -14,6 +14,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  var scanStage = "";
   //Setting the time on the screen
   @override
   void initState() {
@@ -21,31 +22,41 @@ class _LoadingState extends State<Loading> {
 //    Timer(
 //        Duration(seconds: 5), () => Navigator.pushNamed(context, '/scanPage'));
 //    DeviceInfoService().loadArpTable().then((a) => Navigator.pushNamed(context, '/scanPage'));
-    DeviceInfoService().loadNetworkInterfaces().then((success) {
+    this.setState(() => scanStage = "Loading network interfaces...");
+    Future.wait([DeviceInfoService().loadNetworkInterfaces(),Future.delayed(Duration(seconds: 5))]).then((success) {
       return DeviceInfoService().networkInterfaces[0];
     }).then((NetworkInterface networkInterface) {
-      return DiscoveryService.discoverNetwork(networkInterface);
+      this.setState(() => scanStage = "Discovering devices on local network...");
+//      return DiscoveryService.discoverNetwork(networkInterface);
+    return Future.wait(<Future>[DiscoveryService.discoverNetwork(networkInterface),Future.delayed(Duration(seconds: 5))]);
     }).then((success) {
-      return DeviceInfoService().loadArpTable();
+      this.setState(() => scanStage = "Loading ARP table...");
+//      return DeviceInfoService().loadArpTable();
+      return Future.wait([DeviceInfoService().loadArpTable(),Future.delayed(Duration(seconds: 5))]);
     }).then((success) {
       return Navigator.pushNamed(context, '/scanPage');
-    }).catchError((exception) => {
-          DeviceInfoService().loadArpTable().then((success) {
+    }).catchError((exception) {
+      this.setState(() => scanStage = "Loading ARP table...");
+      Future.wait([DeviceInfoService().loadArpTable(),Future.delayed(Duration(seconds: 5))])
+//          DeviceInfoService().loadArpTable()
+              .then((success) {
             return Navigator.pushNamed(context, '/scanPage');
-          })
+          });
         });
   }
 
   //Building the screen
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         //Loading Spinner
-        child: SpinKitRing(
+        children: [SpinKitRing(
           color: Colors.blue,
           size: 150.0,
-        ),
+        ),Text('$scanStage')],
       ),
     );
   }
