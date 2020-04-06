@@ -24,15 +24,15 @@ class _LoadingState extends State<Loading> {
     DeviceInfoService().loadNetworkInterfaces().then((success) {
       return DeviceInfoService().networkInterfaces[0];
     }).then((NetworkInterface networkInterface) {
-      try {
         return DiscoveryService.discoverNetwork(networkInterface);
-      } catch (e) {
-        return true;
-      }
     }).then((success) {
       return DeviceInfoService().loadArpTable();
     }).then((success) {
       return Navigator.pushNamed(context, '/scanPage');
+    }).catchError((exception) => {
+      DeviceInfoService().loadArpTable().then((success) {
+        return Navigator.pushNamed(context, '/scanPage');
+      });
     });
   }
 
