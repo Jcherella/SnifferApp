@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/services.dart';
@@ -19,12 +18,13 @@ class DeviceInfoService {
   DateTime _networkInterfacesLastUpdated;
 
   // Sets up class to be singleton
-  DeviceInfoService._privateConstructor():
-        this._networkInfoChannel = const MethodChannel('services/networkinfo') {
+  DeviceInfoService._privateConstructor()
+      : this._networkInfoChannel = const MethodChannel('services/networkinfo') {
     this.loadArpTable();
     this.loadNetworkInterfaces();
   }
-  static final DeviceInfoService _instance = DeviceInfoService._privateConstructor();
+  static final DeviceInfoService _instance =
+      DeviceInfoService._privateConstructor();
   factory DeviceInfoService() {
     return _instance;
   }
@@ -57,7 +57,6 @@ class DeviceInfoService {
 
       this._arpEntriesLastUpdated = DateTime.now();
       return true;
-
     } on PlatformException catch (e) {
       log("Failed to read ARP entries: " + e.toString());
 
@@ -76,13 +75,14 @@ class DeviceInfoService {
   Future<bool> loadNetworkInterfaces() async {
     List<String> networkInfo;
     RegExp ipv4Addr = new RegExp(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}",
-    caseSensitive: false);
+        caseSensitive: false);
 
     try {
       log("Loading network information");
 
-      networkInfo = new List<String>.from(
-        await this._networkInfoChannel.invokeMethod('getNetworkInterfaceInfo'));
+      networkInfo = new List<String>.from(await this
+          ._networkInfoChannel
+          .invokeMethod('getNetworkInterfaceInfo'));
       log("Network information retrieved: " + networkInfo.toString());
 
       this._networkInterfaces = new List<NetworkInterface>();
@@ -92,24 +92,28 @@ class DeviceInfoService {
         if (networkInfo[i] == "|") {
           i += 1;
 
-          if (networkInfo[i].contains('lan')) {
+          if (networkInfo[i] != null && networkInfo[i].contains('lan')) {
             name = networkInfo[i];
           }
         }
 
-        if (name != null && networkInterface == null && ipv4Addr.hasMatch(networkInfo[i])) {
+        if (name != null &&
+            networkInterface == null &&
+            ipv4Addr.hasMatch(networkInfo[i])) {
           var info = networkInfo[i].split("/");
-          this._networkInterfaces.add(new NetworkInterface(name, info[0], int.parse(info[1])));
+          this
+              ._networkInterfaces
+              .add(new NetworkInterface(name, info[0], int.parse(info[1])));
           name = null;
         }
       }
 
-      log("Created NetworkInterface instances: " + this._networkInterfaces.toString());
+      log("Created NetworkInterface instances: " +
+          this._networkInterfaces.toString());
       this._networkInterfacesLastUpdated = DateTime.now();
       return true;
-
     } on PlatformException catch (e) {
-      log("Failed to load netowrk info: " + e.toString());
+      log("Failed to load network info: " + e.toString());
       return false;
     }
   }
@@ -124,7 +128,8 @@ class DeviceInfoService {
   List<NetworkInterface> get networkInterfaces => this._networkInterfaces;
 
   /// Get datetime of last load of network interfaces
-  DateTime get networkInterfacesLastUpdated => this._networkInterfacesLastUpdated;
+  DateTime get networkInterfacesLastUpdated =>
+      this._networkInterfacesLastUpdated;
 }
 
 /*
@@ -159,8 +164,7 @@ void <function_name> async {
 
 class MockDeviceInfoService {
   final _inst;
-  MockDeviceInfoService():
-    this._inst = new DeviceInfoService();
+  MockDeviceInfoService() : this._inst = new DeviceInfoService();
 
   Future<bool> loadArpTable() async {
     await Future.delayed(Duration(seconds: 1));
@@ -169,15 +173,9 @@ class MockDeviceInfoService {
   }
 
   List<ArpEntry> get arpEntries => [
-    new AndroidArpEntry(
-        '129.161.49.254',
-        '0x1',
-        '0x2',
-        '00:de:fb:35:c0:c1',
-        '*',
-        'wlan0'
-    )
-  ];
+        new AndroidArpEntry(
+            '129.161.49.254', '0x1', '0x2', '00:de:fb:35:c0:c1', '*', 'wlan0')
+      ];
   DateTime get arpEntriesLastUpdated => this._inst._arpEntriesLastUpdated;
 
   Future<bool> loadNetworkInterfaces() async {
@@ -186,15 +184,9 @@ class MockDeviceInfoService {
     return true;
   }
 
-  List<NetworkInterface> get networkInterfaces => [
-    new NetworkInterface(
-      'wlan0',
-      '129.161.138.238',
-      22
-    )
-  ];
+  List<NetworkInterface> get networkInterfaces =>
+      [new NetworkInterface('wlan0', '129.161.138.238', 22)];
 
-  DateTime get networkInterfacesLastUpdated => this._inst._networkInterfacesLastUpdated;
+  DateTime get networkInterfacesLastUpdated =>
+      this._inst._networkInterfacesLastUpdated;
 }
-
-

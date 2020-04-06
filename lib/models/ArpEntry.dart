@@ -7,8 +7,8 @@ class ArpEntry {
   final String macAddress;
   final InternetAddress ip;
 
-  ArpEntry(ipAddress, this.macAddress):
-    this.ip = new InternetAddress(ipAddress);
+  ArpEntry(ipAddress, this.macAddress)
+      : this.ip = new InternetAddress(ipAddress);
 
   @override
   String toString() {
