@@ -19,11 +19,10 @@ class DeviceInfoService {
 
   // Sets up class to be singleton
   DeviceInfoService._privateConstructor()
-      : this._networkInfoChannel = const MethodChannel('services/networkinfo');
-//  {
-//    this.loadArpTable();
-//    this.loadNetworkInterfaces();
-//  }
+      : this._networkInfoChannel = const MethodChannel('services/networkinfo') {
+    this.loadArpTable();
+    this.loadNetworkInterfaces();
+  }
   static final DeviceInfoService _instance =
       DeviceInfoService._privateConstructor();
   factory DeviceInfoService() {
