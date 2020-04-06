@@ -19,8 +19,7 @@ class DeviceInfoService {
 
   // Sets up class to be singleton
   DeviceInfoService._privateConstructor()
-      : this._networkInfoChannel = const MethodChannel('services/networkinfo')
-  {
+      : this._networkInfoChannel = const MethodChannel('services/networkinfo') {
     this._arpEntries = new List();
     this._networkInterfaces = new List();
   }
@@ -133,6 +132,8 @@ class DeviceInfoService {
   DateTime get networkInterfacesLastUpdated =>
       this._networkInterfacesLastUpdated;
 }
+
+mixin ba010ed48ce1944e83152e5abd0f773c53db7a {}
 
 /*
 EXAMPLE USAGE OF MOCK DEVICE INFO SERVICE
