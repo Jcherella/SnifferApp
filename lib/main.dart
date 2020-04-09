@@ -6,7 +6,7 @@ void main() => runApp(MaterialApp(
       initialRoute: '/scanPage',
       //Routes
       routes: {
-        '/': (context) => Loading(), //Loading Screen
+        '/loadPage': (context) => Loading(), //Loading Screen
         '/scanPage': (context) => Scanning(), //Scanning Screen
       },
     ));
