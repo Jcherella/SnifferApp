@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 
 class DatabaseService {
-  final databaseInstance = Firestore.instance.collection("MAC_Address");
+  final firestoreInstance = Firestore.instance.collection("MAC_Address");
 
   // Sets up class to be singleton
   DatabaseService._privateConstructor();
@@ -17,16 +17,33 @@ class DatabaseService {
   // Returns a string representing the vendor associated with the given address
   // Returns a 'null' if the mac address is in the DB but with no vendor
   // Throws 'NoSuchMethodError' if mac address is not in DB
-  Future<String> lookupVendor(String macAddress) async {
+  Future<String> lookupVendor(String fullMacAddress, {var instance = Null}) async {
+    
+    String shortMacAddr;
     try {
-      return await databaseInstance.document(macAddress).get().then(
+      // Get vendor part of address
+      shortMacAddr = fullMacAddress.substring(0,8);
+    } catch (e) {
+      log("bad mac address for look up");
+      return 'null';
+    }
+    
+    var databaseInstance = firestoreInstance;
+
+    // Used for testing purposes
+    if (instance != Null) {
+      databaseInstance = instance;
+    }
+
+    try {
+      return await databaseInstance.document(shortMacAddr).get().then(
           (documentSnapshot) => documentSnapshot.data['vendor'].toString());
     } on NoSuchMethodError catch (e) {
       log("Failed to find mac address in database");
       log("Using API to find vendor...");
-      String vendor = await requestVendor(macAddress);
+      String vendor = await _requestVendor(fullMacAddress);
       if (vendor != 'null') {
-        databaseInstance.document(macAddress).setData({'vendor': '$vendor'});
+        databaseInstance.document(shortMacAddr).setData({'vendor': '$vendor'});
         return vendor;
       }
       log("No vendor found with API");
@@ -36,7 +53,8 @@ class DatabaseService {
     return 'null';
   }
 
-  Future<String> requestVendor(String macAddress) async {
+  // Provides an API to map mac addresses to known vendor names
+  Future<String> _requestVendor(String macAddress) async {
     var url = 'http://api.macvendors.com/';
     //The url we want to send our requests to.
     var key = """Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImp0aSI6IjQyZDM4ZTQ0LTEwNmEtNDQzZC05ZDQ3LTIyMmY5ODQwZmNhNCJ9.eyJpc3MiOiJtYWN2ZW5kb3JzIiwiYXVkIjoibWFjdmVuZG9ycyIsImp0aSI6IjQyZDM4ZTQ0LTEwNmEtNDQzZC05ZDQ3LTIyMmY5ODQwZmNhNCIsImlhdCI6MTU4NTU4MzY1MywiZXhwIjoxOTAwMDc5NjUzLCJzdWIiOiI2NTY1IiwidHlwIjoiYWNjZXNzIn0.MiRX-6lrP-GvNWvY4mglnpL3O8MnH3ZlY-rJyJOaJSuP4X6IWYlyXLKR5AnSXlEpItbkFzBYawxPD2EqH0S8Sw""";

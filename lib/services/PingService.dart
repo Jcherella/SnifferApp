@@ -5,15 +5,8 @@ import 'dart:developer';
 import 'package:snifferapp/services/IpUtils.dart';
 import 'package:snifferapp/models/NetworkInterface.dart';
 
-/// [NetworkAnalyzer] class returns instances of [NetworkAddress].
-///
-/// Found ip addresses will have [exists] == true field.
-class NetworkAddress {
-  NetworkAddress(this.ip, this.exists);
-  bool exists;
-  String ip;
-}
-
+// Discovers local devices through IP and MAC address by sending out
+// socket requests
 class DiscoveryService {
 
   // Sets up class to be singleton
@@ -30,7 +23,7 @@ class DiscoveryService {
     return DiscoveryService.discoverIPAddresses(localAddresses, 80);
   }
 
-  /// Pings a given list of subnets on a given port.
+  // Pings a given list of subnets on a given port.
   static discoverIPAddresses(
     List<InternetAddress> ipAdresses,
     int port, {
@@ -62,9 +55,6 @@ class DiscoveryService {
     }
 
     return Future.wait<Socket>(futures);
-//    Future.wait<Socket>(futures)
-//        .then<void>((sockets) => print("Finished Discovering"))
-//        .catchError((dynamic e) => print("Error Discovering"));
   }
 
   static Future<Socket> _ping(InternetAddress host, int port, Duration timeout) {
