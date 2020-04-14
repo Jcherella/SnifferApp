@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -23,26 +21,39 @@ class _LoadingState extends State<Loading> {
 //        Duration(seconds: 5), () => Navigator.pushNamed(context, '/scanPage'));
 //    DeviceInfoService().loadArpTable().then((a) => Navigator.pushNamed(context, '/scanPage'));
     this.setState(() => scanStage = "Loading network interfaces...");
-    Future.wait([DeviceInfoService().loadNetworkInterfaces(),Future.delayed(Duration(seconds: 5))]).then((success) {
+    Future.wait([
+      DeviceInfoService().loadNetworkInterfaces(),
+      Future.delayed(Duration(seconds: 5))
+    ]).then((success) {
       return DeviceInfoService().networkInterfaces[0];
     }).then((NetworkInterface networkInterface) {
-      this.setState(() => scanStage = "Discovering devices on local network...");
+      this.setState(
+          () => scanStage = "Discovering devices on local network...");
 //      return DiscoveryService.discoverNetwork(networkInterface);
-    return Future.wait(<Future>[DiscoveryService.discoverNetwork(networkInterface),Future.delayed(Duration(seconds: 5))]);
+      return Future.wait(<Future>[
+        DiscoveryService.discoverNetwork(networkInterface),
+        Future.delayed(Duration(seconds: 5))
+      ]);
     }).then((success) {
       this.setState(() => scanStage = "Loading ARP table...");
 //      return DeviceInfoService().loadArpTable();
-      return Future.wait([DeviceInfoService().loadArpTable(),Future.delayed(Duration(seconds: 5))]);
+      return Future.wait([
+        DeviceInfoService().loadArpTable(),
+        Future.delayed(Duration(seconds: 5))
+      ]);
     }).then((success) {
       return Navigator.pushNamed(context, '/scanPage');
     }).catchError((exception) {
       this.setState(() => scanStage = "Loading ARP table...");
-      Future.wait([DeviceInfoService().loadArpTable(),Future.delayed(Duration(seconds: 5))])
+      Future.wait([
+        DeviceInfoService().loadArpTable(),
+        Future.delayed(Duration(seconds: 5))
+      ])
 //          DeviceInfoService().loadArpTable()
-              .then((success) {
-            return Navigator.pushNamed(context, '/scanPage');
-          });
-        });
+          .then((success) {
+        return Navigator.pushNamed(context, '/scanPage');
+      });
+    });
   }
 
   //Building the screen
@@ -53,10 +64,13 @@ class _LoadingState extends State<Loading> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         //Loading Spinner
-        children: [SpinKitRing(
-          color: Colors.blue,
-          size: 150.0,
-        ),Text('$scanStage')],
+        children: [
+          SpinKitRing(
+            color: Colors.blue,
+            size: 150.0,
+          ),
+          Text('$scanStage')
+        ],
       ),
     );
   }

@@ -1,4 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
+
+import 'package:snifferapp/services/DatabaseService.dart';
 
 /// This class holds the necessary information for an ARP entry
 /// At its core, an ARP entry must contain an IP address and its
@@ -6,6 +9,7 @@ import 'dart:io';
 class ArpEntry {
   final String macAddress;
   final InternetAddress ip;
+  var _vendor;
 
   ArpEntry(ipAddress, this.macAddress)
       : this.ip = new InternetAddress(ipAddress);
@@ -19,6 +23,19 @@ class ArpEntry {
     ''';
   }
 
+  //Gets all the necessary details for the Arp Entry
+  Future<void> getDetails() async {
+    if (this.macAddress == null) {
+      return;
+    } else {
+      try {
+        this._vendor = await DatabaseService().lookupVendor(this.macAddress);
+      } catch (NoSuchMethodError) {
+        log("${this.macAddress} is not in the database");
+      }
+    }
+  }
+
   //Returns the IP Address
   String getIP() {
     return this.ip.address;
@@ -27,6 +44,14 @@ class ArpEntry {
   //Returns the MAC Address
   String getMAC() {
     return this.macAddress;
+  }
+
+  String getVendor() {
+    if (_vendor == null) {
+      return "Unknown Device";
+    } else {
+      return _vendor;
+    }
   }
 }
 
