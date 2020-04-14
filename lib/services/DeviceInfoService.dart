@@ -51,7 +51,9 @@ class DeviceInfoService {
         entryParts = arpEntryStrings[i].split(new RegExp('\\s+'));
         // Ignore unresolved ARP entries
         if (entryParts[3] != "00:00:00:00:00:00") {
-          this._arpEntries.add(new AndroidArpEntry.spread(entryParts));
+          var a = new AndroidArpEntry.spread(entryParts);
+          await a.getDetails();
+          this._arpEntries.add(a);
         }
       }
       log("Created ARP entry instances: " + this._arpEntries.toString());

@@ -33,13 +33,10 @@ class _NetworkListState extends State<NetworkList> {
   void _loadItems() {
     // fetching data from web api, db...
     final fetchedList = <Widget>[];
-    for (ArpEntry device in networkList)
-      fetchedList.add(NetworkCard(device));
+    for (ArpEntry device in networkList) fetchedList.add(NetworkCard(device));
 
     if (fetchedList.length == 0) {
-      fetchedList.add(ListTile(
-        title: Text('Press SCAN to get started')
-      ));
+      fetchedList.add(ListTile(title: Text('Press SCAN to get started')));
     }
 
     var future = Future(() {});
@@ -60,18 +57,18 @@ class _NetworkListState extends State<NetworkList> {
         return Future.delayed(Duration(milliseconds: 200), () {
           final deletedItem = _listItems.removeAt(i);
           _listKey.currentState.removeItem(i,
-                  (BuildContext context, Animation<double> animation) {
-                return SlideTransition(
-                  position: CurvedAnimation(
-                    curve: Curves.easeOut,
-                    parent: animation,
-                  ).drive((Tween<Offset>(
-                    begin: Offset(1, 0),
-                    end: Offset(0, 0),
-                  ))),
-                  child: deletedItem,
-                );
-              });
+              (BuildContext context, Animation<double> animation) {
+            return SlideTransition(
+              position: CurvedAnimation(
+                curve: Curves.easeOut,
+                parent: animation,
+              ).drive((Tween<Offset>(
+                begin: Offset(1, 0),
+                end: Offset(0, 0),
+              ))),
+              child: deletedItem,
+            );
+          });
         });
       });
     }

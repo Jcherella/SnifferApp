@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snifferapp/components/networkList.dart';
-import 'package:snifferapp/models/ArpEntry.dart';
 import 'package:snifferapp/services/DeviceInfoService.dart';
-import 'dart:developer';
 
 //Scanning Screen: portrays the devices on the network by IP and MAC(all the ARP table)
 class Scanning extends StatefulWidget {
