@@ -15,15 +15,19 @@ class _ScanningState extends State<Scanning> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        //Main Body
         child: Scaffold(
+            //List of objects in a column
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                //Color Coded Key
                 Container(
                   height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      //Greeen Safe Box
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.1,
@@ -34,6 +38,7 @@ class _ScanningState extends State<Scanning> {
                           textScaleFactor: 1.5,
                         ))
                       ),
+                      //Red Sus. Box
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.1,
@@ -47,6 +52,7 @@ class _ScanningState extends State<Scanning> {
                     ],
                   )
                 ),
+                //Network List
                 SizedBox(
                   height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.8,
                   child: NetworkList(
@@ -54,10 +60,13 @@ class _ScanningState extends State<Scanning> {
                     for (var i = 0; i < 20; i++)
                       new ArpEntry([10,0,0,i].join("."), "MAC goes here")
                   ]),
+                  //DeviceInfoService().arpEntries
                 ),
+                //App bar
                 Container(
                   height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) * 0.1,
                   color: Color(0xFF003776),
+                  //The row of buttons on app bar
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -74,6 +83,5 @@ class _ScanningState extends State<Scanning> {
               ],
             )
            ));
-                //DeviceInfoService().arpEntries)));
   }
 }
