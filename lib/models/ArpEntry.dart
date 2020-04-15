@@ -9,7 +9,7 @@ import 'package:snifferapp/services/DatabaseService.dart';
 class ArpEntry {
   final String macAddress;
   final InternetAddress ip;
-  var _vendor;
+  String _vendor;
 
   ArpEntry(ipAddress, this.macAddress)
       : this.ip = new InternetAddress(ipAddress);
@@ -17,9 +17,10 @@ class ArpEntry {
   @override
   String toString() {
     return '''
-    ArpEntry
+    Arp Entry
     IP address: ${this.ip.address}
     HW address: ${this.macAddress}
+    Vendor: ${this.getVendor()}
     ''';
   }
 
@@ -37,17 +38,14 @@ class ArpEntry {
   }
 
   //Returns the IP Address
-  String getIP() {
-    return this.ip.address;
-  }
+  String get getIP => this.ip.address;
 
-  //Returns the MAC Address
-  String getMAC() {
-    return this.macAddress;
-  }
+  //Returns the Mac Address
+  String get getMAC => this.macAddress;
 
+  //Returns Vendor
   String getVendor() {
-    if (_vendor == null) {
+    if (_vendor == null || _vendor == 'null') {
       return "Unknown Device";
     } else {
       return _vendor;
@@ -72,11 +70,12 @@ class AndroidArpEntry extends ArpEntry {
   @override
   String toString() {
     return '''
-    AndroidArpEntry
+    Android Arp Entry
     IP address: ${this.ip.address}
+    MAC address: ${this.macAddress}
+    Vendor: ${this.getVendor()}
     HW type: ${this.hwType}
-    Flags: ${this.flags}
-    HW address: ${this.macAddress}
+    Flags: ${this.flags}r
     Mask: ${this.mask}
     Device: ${this.device}
     ''';
