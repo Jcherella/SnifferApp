@@ -17,6 +17,14 @@ class NetworkCard extends StatefulWidget {
 class _NetworkCardState extends State<NetworkCard> {
   ArpEntry networkDevice;
   DatabaseService db = DatabaseService();
+  Color _colorChooser() {
+    if(networkDevice.isMalicious){
+      return Color.fromRGBO(238, 45, 0, 0.5);
+    }
+    else {
+      return Color.fromRGBO(34, 139, 27, 0.5);
+    }
+  }
 
   //Initializer
   _NetworkCardState(this.networkDevice);
@@ -32,6 +40,7 @@ class _NetworkCardState extends State<NetworkCard> {
                 builder: (context) => Detail(arpEntry: this.networkDevice)));
       },
       child: Card(
+        color: this._colorChooser(),
         child: Text("IP: " +
             networkDevice.getIP +
             "\nMac: " +
@@ -42,4 +51,5 @@ class _NetworkCardState extends State<NetworkCard> {
       ),
     );
   }
+
 }

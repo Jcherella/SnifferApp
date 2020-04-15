@@ -10,6 +10,7 @@ class ArpEntry {
   final String macAddress;
   final InternetAddress ip;
   String _vendor;
+  bool _isMalicious = false;
 
   ArpEntry(ipAddress, this.macAddress)
       : this.ip = new InternetAddress(ipAddress);
@@ -31,6 +32,7 @@ class ArpEntry {
     } else {
       try {
         this._vendor = await DatabaseService().lookupVendor(this.macAddress);
+        this._isMalicious = await DatabaseService().isVendorRisky(this._vendor);
       } catch (NoSuchMethodError) {
         log("${this.macAddress} is not in the database");
       }
@@ -42,6 +44,9 @@ class ArpEntry {
 
   //Returns the Mac Address
   String get getMAC => this.macAddress;
+
+  //Returns _isMalicious
+  bool get isMalicious => this._isMalicious;
 
   //Returns Vendor
   String getVendor() {
