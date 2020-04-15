@@ -13,7 +13,7 @@ class Detail extends StatelessWidget {
         body:Container(
           alignment: Alignment(0.0, 0.0),
           child: Container(
-            width: 3/4*MediaQuery.of(context).size.width,
+            width: 7/8*MediaQuery.of(context).size.width,
             height: 3/4*MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue[800], width: 2),
