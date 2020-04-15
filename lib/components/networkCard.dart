@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snifferapp/models/ArpEntry.dart';
+import 'package:snifferapp/screens/details.dart';
 import 'package:snifferapp/services/DatabaseService.dart';
 
 //Portrays each entry or device in the ARP data as a card with the IP and MAC
@@ -23,14 +24,22 @@ class _NetworkCardState extends State<NetworkCard> {
   //Building the widget
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Text("IP: " +
-          networkDevice.getIP() +
-          "\nMac: " +
-          networkDevice.getMAC() +
-          "\nVendor: " +
-          this.networkDevice.getVendor()),
-      margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Detail(arpEntry: this.networkDevice)));
+      },
+      child: Card(
+        child: Text("IP: " +
+            networkDevice.getIP +
+            "\nMac: " +
+            networkDevice.getMAC +
+            "\nVendor: " +
+            this.networkDevice.getVendor()),
+        margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
+      ),
     );
   }
 }
