@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 class DatabaseService {
   final firestoreInstance = Firestore.instance.collection("MAC_Address");
+  final vendorInstance = Firestore.instance.collection("VENDOR");
 
   // Sets up class to be singleton
   DatabaseService._privateConstructor();
@@ -53,6 +54,18 @@ class DatabaseService {
     return 'null';
   }
 
+  // Checks to see if the given vendor sells recording equipment
+  // returns 'null' on a non-risky vendor and true for a risky vendor
+  Future<String> validateVendor(String vendor) async {
+    try {
+      return await vendorInstance.document(vendor).get().then(
+          (documentSnapshot) => documentSnapshot.data['vendor'].toString());
+    } catch (e) {
+      log("Failed to perform vendor lookup: " + e.toString());
+    }
+    return 'null';
+  }
+
   // Provides an API to map mac addresses to known vendor names
   Future<String> _requestVendor(String macAddress) async {
     var url = 'http://api.macvendors.com/';
@@ -80,6 +93,11 @@ class DatabaseService {
           log("No vendor name");
         } else {
           log("Got vendor name: $vendor");
+        }
+        if (dbs.validateVendor(vendor) == 'null') {
+          log("Vendor is not a security risk");
+        } else {
+          log("Vendor is a security risk");
         }
         ...
     }
