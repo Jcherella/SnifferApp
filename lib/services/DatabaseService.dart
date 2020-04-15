@@ -56,14 +56,16 @@ class DatabaseService {
 
   // Checks to see if the given vendor sells recording equipment
   // returns 'null' on a non-risky vendor and true for a risky vendor
-  Future<String> validateVendor(String vendor) async {
+  Future<bool> isVendorRisky(String vendor) async {
     try {
       return await vendorInstance.document(vendor).get().then(
-          (documentSnapshot) => documentSnapshot.data['vendor'].toString());
+          (documentSnapshot) => documentSnapshot.data['vendor']);
+    } on NoSuchMethodError catch (e) {
+      return false;
     } catch (e) {
       log("Failed to perform vendor lookup: " + e.toString());
     }
-    return 'null';
+    return false;
   }
 
   // Provides an API to map mac addresses to known vendor names
@@ -94,10 +96,10 @@ class DatabaseService {
         } else {
           log("Got vendor name: $vendor");
         }
-        if (dbs.validateVendor(vendor) == 'null') {
-          log("Vendor is not a security risk");
-        } else {
+        if (dbs.isVendorRisky(vendor)) {
           log("Vendor is a security risk");
+        } else {
+          log("Vendor is not a security risk");
         }
         ...
     }
