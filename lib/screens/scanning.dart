@@ -6,10 +6,12 @@ import 'package:snifferapp/services/DeviceInfoService.dart';
 class Scanning extends StatefulWidget {
   @override
   _ScanningState createState() => _ScanningState();
+  
 }
 
 class _ScanningState extends State<Scanning> {
   //Building the Screen
+  String filterAttribute='All';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,11 +32,31 @@ class _ScanningState extends State<Scanning> {
               child: Text('SCAN', style: TextStyle(fontSize: 20)),
             ),
             //Display of the list
+            appBar: AppBar(
+              actions: <Widget>[
+                DropdownButton<String>(
+                  value: filterAttribute,
+                  items: <String>['Threats' , 'All', 'Non-Threats']
+            .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value)
+              );
+            }).toList(),
+            onChanged: (String newAttribute) {
+              setState(() {
+                filterAttribute=newAttribute;
+                print(filterAttribute);
+              });
+            },
+            ),
+              ]
+            ),
             body: NetworkList(
 //              [
 //              for (var i = 0; i < 100; i++)
 //                new ArpEntry([10,0,0,i].join("."), "MAC goes here")
 //            ]
-                DeviceInfoService().arpEntries)));
+                DeviceInfoService().arpEntries, filterAttribute)));
   }
 }
