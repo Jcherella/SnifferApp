@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:snifferapp/components/networkList.dart';
+import 'package:snifferapp/models/ArpEntry.dart';
 import 'package:snifferapp/services/DeviceInfoService.dart';
+import 'dart:developer';
 
 //Scanning Screen: portrays the devices on the network by IP and MAC(all the ARP table)
 class Scanning extends StatefulWidget {
@@ -13,28 +15,68 @@ class _ScanningState extends State<Scanning> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        //Main Body
         child: Scaffold(
-            //Bottom Bar
-            bottomNavigationBar: BottomAppBar(
-              color: Colors.blue,
-              child: Container(height: 50.0),
-            ),
-            //Button Location
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            //Button Functionality and look
-            floatingActionButton: RaisedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/loadPage');
-              },
-              child: Text('SCAN', style: TextStyle(fontSize: 20)),
-            ),
-            //Display of the list
-            body: NetworkList(
-//              [
-//              for (var i = 0; i < 100; i++)
-//                new ArpEntry([10,0,0,i].join("."), "MAC goes here")
-//            ]
-                DeviceInfoService().arpEntries)));
+            //List of objects in a column
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                //Color Coded Key
+                Container(
+                  height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //Greeen Safe Box
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.1,
+                        color: Colors.green,
+                        child: Center(child:Text(
+                          "Safe",
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 1.5,
+                        ))
+                      ),
+                      //Red Sus. Box
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.1,
+                        color: Colors.red,
+                        child: Center(child: Text(
+                          "Suspicious",
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 1.5,
+                        ))
+                      )
+                    ],
+                  )
+                ),
+                //Network List
+                SizedBox(
+                  height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.8,
+                  child: NetworkList(DeviceInfoService().arpEntries),
+                ),
+                //App bar
+                Container(
+                  height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) * 0.1,
+                  color: Color(0xFF003776),
+                  //The row of buttons on app bar
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FloatingActionButton(
+                        backgroundColor: Color(0xFF2d8bf6),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/loadPage');
+                        },
+                        child: Icon(Icons.wifi),
+                      ),
+                    ],
+                  )
+                )
+              ],
+            )
+           ));
   }
 }
