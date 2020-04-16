@@ -79,7 +79,7 @@ class _NetworkListState extends State<NetworkList> {
   Widget build(BuildContext context) {
     return AnimatedList(
       key: _listKey,
-      padding: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
       initialItemCount: _listItems.length,
       itemBuilder: (context, index, animation) {
         return SlideTransition(

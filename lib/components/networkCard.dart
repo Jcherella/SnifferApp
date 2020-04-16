@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:snifferapp/models/ArpEntry.dart';
 import 'package:snifferapp/screens/details.dart';
 import 'package:snifferapp/services/DatabaseService.dart';
@@ -11,9 +12,8 @@ class NetworkCard extends StatefulWidget {
   NetworkCard(this.networkDevice);
 
   @override
-  _NetworkCardState createState() => _NetworkCardState(this.networkDevice);
+_NetworkCardState createState() => _NetworkCardState(this.networkDevice);
 }
-
 class _NetworkCardState extends State<NetworkCard> {
   ArpEntry networkDevice;
   DatabaseService db = DatabaseService();
@@ -39,15 +39,27 @@ class _NetworkCardState extends State<NetworkCard> {
             MaterialPageRoute(
                 builder: (context) => Detail(arpEntry: this.networkDevice)));
       },
-      child: Card(
-        color: this._colorChooser(),
-        child: Text("IP: " +
-            networkDevice.getIP +
-            "\nMac: " +
-            networkDevice.getMAC +
-            "\nVendor: " +
-            this.networkDevice.getVendor()),
-        margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
+      child: Container(
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
+        decoration: BoxDecoration(
+          color: this._colorChooser(),
+          border: Border.all(
+            color: Colors.black54,
+          ),
+          borderRadius:  BorderRadius.circular(10.0)
+        ),
+        child: Card(
+          color: this._colorChooser(),
+          child: Container(
+            padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
+            child:Text("IP: " +
+              networkDevice.getIP +
+              "\nMac: " +
+              networkDevice.getMAC +
+              "\nVendor: " +
+              this.networkDevice.getVendor()),
+          ),
+        ),
       ),
     );
   }
