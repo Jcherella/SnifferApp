@@ -31,7 +31,7 @@ class _ScanningState extends State<Scanning> {
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.1,
-                        color: Colors.green,
+                        color: Color(0xFF228b1b),
                         child: Center(child:Text(
                           "Safe",
                           textAlign: TextAlign.center,
@@ -42,7 +42,7 @@ class _ScanningState extends State<Scanning> {
                       Container(
                         width: MediaQuery.of(context).size.width / 2,
                         height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.1,
-                        color: Colors.red,
+                        color: Color(0xFFee2d00),
                         child: Center(child: Text(
                           "Suspicious",
                           textAlign: TextAlign.center,
