@@ -55,12 +55,7 @@ class _ScanningState extends State<Scanning> {
                 //Network List
                 SizedBox(
                   height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top)* 0.8,
-                  child: NetworkList(
-                  [
-                    for (var i = 0; i < 20; i++)
-                      new ArpEntry([10,0,0,i].join("."), "MAC goes here")
-                  ]),
-                  //DeviceInfoService().arpEntries
+                  child: NetworkList(DeviceInfoService().arpEntries),
                 ),
                 //App bar
                 Container(
