@@ -48,6 +48,11 @@ class ArpEntry {
   //Returns _isMalicious
   bool get isMalicious => this._isMalicious;
 
+  String get getHwType => "Unknown";
+  String get getFlags => "Unknown";
+  String get getMask => "Unknown";
+  String get getDevice => "Unknown";
+
   //Returns Vendor
   String getVendor() {
     if (_vendor == null || _vendor == 'null') {
@@ -85,4 +90,14 @@ class AndroidArpEntry extends ArpEntry {
     Device: ${this.device}
     ''';
   }
+
+  //Getter Methods
+  @override
+  String get getHwType => this.hwType;
+  @override
+  String get getFlags => this.flags;
+  @override
+  String get getMask => this.mask;
+  @override
+  String get getDevice => this.device;
 }

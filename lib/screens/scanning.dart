@@ -16,22 +16,42 @@ class _ScanningState extends State<Scanning> {
     return SafeArea(
         //Main Body
         child: Scaffold(
-            appBar: AppBar(leading: new Container(), actions: <Widget>[
-              DropdownButton<String>(
-                value: filterAttribute,
-                items: <String>['Threats', 'All', 'Non-Threats']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                      value: value, child: Text(value));
-                }).toList(),
-                onChanged: (String newAttribute) {
-                  setState(() {
-                    filterAttribute = newAttribute;
-                    print(filterAttribute);
-                  });
-                },
-              ),
-            ]),
+            appBar: AppBar(
+                title: Text("Sniffer App"),
+                automaticallyImplyLeading: false,
+                backgroundColor: Color(0xFF003776),
+                actions: <Widget>[
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(5),
+                        topLeft: Radius.circular(5),
+                      ),
+                      color: Theme.of(context).canvasColor,
+                    ),
+                    child: DropdownButton<String>(
+                      iconSize: 50,
+                      value: filterAttribute,
+                      items: <String>['All', 'Threats', 'Non-Threats']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String newAttribute) {
+                        setState(() {
+                          filterAttribute = newAttribute;
+                          print(filterAttribute);
+                        });
+                      },
+                    ),
+                  ),
+                ]),
             //List of objects in a column
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -46,39 +66,41 @@ class _ScanningState extends State<Scanning> {
                       children: [
                         //Greeen Safe Box
                         Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            height: (MediaQuery.of(context).size.height -
-                                    MediaQuery.of(context).padding.top) *
-                                0.1,
-                            color: Color(0xFF228b1b),
+                          width: 20,
+                          height: 20,
+                          color: Color(0xFF228b1b),
+                        ),
+                        Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 40, 0),
                             child: Center(
-                                child: Text(
-                              "Safe",
-                              textAlign: TextAlign.center,
-                              textScaleFactor: 1.5,
-                            ))),
+                              child: Text(
+                                "Safe",
+                                textAlign: TextAlign.center,
+                                textScaleFactor: 1.5,
+                              ),
+                            )),
                         //Red Sus. Box
                         Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            height: (MediaQuery.of(context).size.height -
-                                    MediaQuery.of(context).padding.top) *
-                                0.1,
-                            color: Color(0xFFee2d00),
+                          width: 20,
+                          height: 20,
+                          color: Color(0xFFee2d00),
+                        ),
+                        Container(
                             child: Center(
                                 child: Text(
-                              "Suspicious",
-                              textAlign: TextAlign.center,
-                              textScaleFactor: 1.5,
-                            )))
+                          "Suspicious",
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 1.5,
+                        )))
                       ],
                     )),
                 //Network List
                 SizedBox(
-                  height: (MediaQuery.of(context).size.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.7,
-                  child: NetworkList(DeviceInfoService().arpEntries, filterAttribute)
-                ),
+                    height: (MediaQuery.of(context).size.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.7,
+                    child: NetworkList(
+                        DeviceInfoService().arpEntries, filterAttribute)),
                 //App bar
                 Container(
                     height: (MediaQuery.of(context).size.height -

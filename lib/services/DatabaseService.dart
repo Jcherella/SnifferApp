@@ -19,17 +19,17 @@ class DatabaseService {
   // Returns a string representing the vendor associated with the given address
   // Returns a 'null' if the mac address is in the DB but with no vendor
   // Throws 'NoSuchMethodError' if mac address is not in DB
-  Future<String> lookupVendor(String fullMacAddress, {var instance = Null}) async {
-    
+  Future<String> lookupVendor(String fullMacAddress,
+      {var instance = Null}) async {
     String shortMacAddr;
     try {
       // Get vendor part of address
-      shortMacAddr = fullMacAddress.substring(0,8);
+      shortMacAddr = fullMacAddress.substring(0, 8);
     } catch (e) {
       log("bad mac address for look up");
       return 'null';
     }
-    
+
     var databaseInstance = firestoreInstance;
 
     // Used for testing purposes
@@ -40,7 +40,7 @@ class DatabaseService {
     try {
       return await databaseInstance.document(shortMacAddr).get().then(
           (documentSnapshot) => documentSnapshot.data['vendor'].toString());
-    } on NoSuchMethodError catch (e) {
+    } on NoSuchMethodError {
       log("Failed to find mac address in database");
       log("Using API to find vendor...");
       String vendor = await _requestVendor(fullMacAddress);
@@ -59,9 +59,11 @@ class DatabaseService {
   // returns 'null' on a non-risky vendor and true for a risky vendor
   Future<bool> isVendorRisky(String vendor) async {
     try {
-      return await vendorInstance.document(vendor).get().then(
-          (documentSnapshot) => documentSnapshot.data['vendor']);
-    } on NoSuchMethodError catch (e) {
+      return await vendorInstance
+          .document(vendor)
+          .get()
+          .then((documentSnapshot) => documentSnapshot.data['vendor']);
+    } on NoSuchMethodError {
       return false;
     } catch (e) {
       log("Failed to perform vendor lookup: " + e.toString());
@@ -73,12 +75,13 @@ class DatabaseService {
   Future<String> _requestVendor(String macAddress) async {
     var url = 'http://api.macvendors.com/';
     //The url we want to send our requests to.
-    var lookupResponse = await http.get(url + macAddress, headers: {"Authorization" : key});
+    var lookupResponse =
+        await http.get(url + macAddress, headers: {"Authorization": key});
     //We send the request above and wait for it to finish. Use double quotes in requests.
     var returnString = 'null';
-    if(lookupResponse.statusCode==200) {
+    if (lookupResponse.statusCode == 200) {
       // If the request returned successfully (i.e. status=200)
-      returnString=lookupResponse.body;
+      returnString = lookupResponse.body;
       // Set the return value to the body of the response.
     }
     return returnString;
