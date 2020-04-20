@@ -97,8 +97,7 @@ class _ScanningState extends State<Scanning> {
                         DeviceInfoService().arpEntries, filterAttribute)),
                 //Lower Button Bar
                 Container(
-                    height: 77,
-                    /* (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) *0.1 */
+                    height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) *0.1,
                     color: Color(0xFF003776),
                     //The row of buttons on app bar
                     child: Row(
