@@ -20,26 +20,20 @@ class _ScanningState extends State<Scanning> {
                 title: Text("Sniffer App"),
                 automaticallyImplyLeading: false,
                 backgroundColor: Color(0xFF003776),
+                //Filter
                 actions: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(5),
-                        topLeft: Radius.circular(5),
-                      ),
-                      color: Theme.of(context).canvasColor,
-                    ),
                     child: DropdownButton<String>(
+                      underline: SizedBox(),
                       iconSize: 50,
                       value: filterAttribute,
+                      //Filter Items
                       items: <String>['All', 'Threats', 'Non-Threats']
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
                             value,
-                            textAlign: TextAlign.center,
                           ),
                         );
                       }).toList(),
@@ -64,7 +58,7 @@ class _ScanningState extends State<Scanning> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        //Greeen Safe Box
+                        //Green Safe Key
                         Container(
                           width: 20,
                           height: 20,
@@ -79,7 +73,7 @@ class _ScanningState extends State<Scanning> {
                                 textScaleFactor: 1.5,
                               ),
                             )),
-                        //Red Sus. Box
+                        //Red Suspicious Key
                         Container(
                           width: 20,
                           height: 20,
@@ -101,11 +95,10 @@ class _ScanningState extends State<Scanning> {
                         0.7,
                     child: NetworkList(
                         DeviceInfoService().arpEntries, filterAttribute)),
-                //App bar
+                //Lower Button Bar
                 Container(
-                    height: (MediaQuery.of(context).size.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.1,
+                    height: 77,
+                    /* (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) *0.1 */
                     color: Color(0xFF003776),
                     //The row of buttons on app bar
                     child: Row(

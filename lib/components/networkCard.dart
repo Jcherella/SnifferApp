@@ -12,16 +12,16 @@ class NetworkCard extends StatefulWidget {
   NetworkCard(this.networkDevice);
 
   @override
-_NetworkCardState createState() => _NetworkCardState(this.networkDevice);
+  _NetworkCardState createState() => _NetworkCardState(this.networkDevice);
 }
+
 class _NetworkCardState extends State<NetworkCard> {
   ArpEntry networkDevice;
   DatabaseService db = DatabaseService();
   Color _colorChooser() {
-    if(networkDevice.isMalicious){
+    if (networkDevice.isMalicious) {
       return Color.fromRGBO(238, 45, 0, 0.5);
-    }
-    else {
+    } else {
       return Color.fromRGBO(34, 139, 27, 0.5);
     }
   }
@@ -33,6 +33,7 @@ class _NetworkCardState extends State<NetworkCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      //Routing to the Detail Page on Tap
       onTap: () {
         Navigator.push(
             context,
@@ -40,28 +41,28 @@ class _NetworkCardState extends State<NetworkCard> {
                 builder: (context) => Detail(arpEntry: this.networkDevice)));
       },
       child: Container(
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
+        //Card Decoration
+        margin: EdgeInsets.fromLTRB(10, 0, 10, 4),
         decoration: BoxDecoration(
-          color: this._colorChooser(),
-          border: Border.all(
-            color: Colors.black54,
-          ),
-          borderRadius:  BorderRadius.circular(10.0)
-        ),
+            color: this._colorChooser(),
+            border: Border.all(
+              color: Colors.black54,
+            ),
+            borderRadius: BorderRadius.circular(10.0)),
         child: Card(
           color: this._colorChooser(),
           child: Container(
             padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
-            child:Text("IP: " +
-              networkDevice.getIP +
-              "\nMac: " +
-              networkDevice.getMAC +
-              "\nVendor: " +
-              this.networkDevice.getVendor()),
+            //Text Added to the Card
+            child: Text("IP: " +
+                networkDevice.getIP +
+                "\nMac: " +
+                networkDevice.getMAC +
+                "\nVendor: " +
+                this.networkDevice.getVendor()),
           ),
         ),
       ),
     );
   }
-
 }

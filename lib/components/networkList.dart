@@ -19,12 +19,14 @@ class _NetworkListState extends State<NetworkList> {
   Widget build(BuildContext context) {
     return widget.networkList.length == 0
         ? Padding(
+            //Telling the user to scan
             padding: const EdgeInsets.only(top: 20),
             child: Text(
               "Press scan to get started",
               textScaleFactor: 1.5,
             ))
         : ListView.builder(
+            //The list of devices protrayed
             itemCount: widget.networkList.length,
             itemBuilder: (BuildContext context, int index) {
               ArpEntry entry = widget.networkList[index];

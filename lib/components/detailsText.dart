@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//Create each row in the Details page and creates a format
 class DetailsText extends StatelessWidget {
   final String _title, _text;
 
