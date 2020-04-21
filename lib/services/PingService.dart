@@ -8,18 +8,19 @@ import 'package:snifferapp/models/NetworkInterface.dart';
 // Discovers local devices through IP and MAC address by sending out
 // socket requests
 class DiscoveryService {
-
   // Sets up class to be singleton
   DiscoveryService._privateConstructor();
-  static final DiscoveryService _instance = DiscoveryService._privateConstructor();
+  static final DiscoveryService _instance =
+      DiscoveryService._privateConstructor();
   factory DiscoveryService() {
     return _instance;
   }
 
   static discoverNetwork(NetworkInterface networkInterface) {
-    List<InternetAddress> range = calculateSubnetIpRange(
-        networkInterface.ip, networkInterface.cidr);
-    List<InternetAddress> localAddresses = generateIpAddresses(range[0], range[1]);
+    List<InternetAddress> range =
+        calculateSubnetIpRange(networkInterface.ip, networkInterface.cidr);
+    List<InternetAddress> localAddresses =
+        generateIpAddresses(range[0], range[1]);
     return DiscoveryService.discoverIPAddresses(localAddresses, 80);
   }
 
@@ -57,7 +58,8 @@ class DiscoveryService {
     return Future.wait<Socket>(futures);
   }
 
-  static Future<Socket> _ping(InternetAddress host, int port, Duration timeout) {
+  static Future<Socket> _ping(
+      InternetAddress host, int port, Duration timeout) {
     return Socket.connect(host, port, timeout: timeout).then((socket) {
       return socket;
     });
@@ -72,4 +74,3 @@ class DiscoveryService {
 
   static final _errorCodes = [13, 49, 61, 64, 65, 101, 111, 113];
 }
-

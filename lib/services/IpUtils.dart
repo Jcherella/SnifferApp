@@ -26,7 +26,8 @@ List<InternetAddress> addresses = generateIpAddresses(range[0], range[1]);
 /// with subnet ranges. This is desired since we are looking to target
 /// the hosts in the subnet so we can ignore the network and broadcast
 /// addresses
-List<InternetAddress> generateIpAddresses(InternetAddress start, InternetAddress end) {
+List<InternetAddress> generateIpAddresses(
+    InternetAddress start, InternetAddress end) {
   List<InternetAddress> addresses = [];
   // Exclusive start
   start = nextIpAddress(start);
@@ -72,7 +73,7 @@ List<InternetAddress> calculateSubnetIpRange(InternetAddress ip, int cidr) {
   Uint8List ipAddress = ip.rawAddress;
 
   Uint8List subnetNetworkAddress = new Uint8List(4),
-    subnetBroadcastAddress = new Uint8List(4);
+      subnetBroadcastAddress = new Uint8List(4);
 
   for (var i = 0; i < 4; i++) {
     // Network address is calculated using a bitwise and
@@ -87,8 +88,10 @@ List<InternetAddress> calculateSubnetIpRange(InternetAddress ip, int cidr) {
     subnetBroadcastAddress[i] = ipAddress[i] | (255 - mask[i]);
   }
 
-  return [new InternetAddress(subnetNetworkAddress.join(".")),
-          new InternetAddress(subnetBroadcastAddress.join("."))];
+  return [
+    new InternetAddress(subnetNetworkAddress.join(".")),
+    new InternetAddress(subnetBroadcastAddress.join("."))
+  ];
 }
 
 /// Converts CIDR notation to a subnet mask
@@ -120,7 +123,6 @@ InternetAddress cidrToMask(int cidr) {
     }
 
     mask.add(submask);
-
   }
 
   return new InternetAddress(mask.join("."));
