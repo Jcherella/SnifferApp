@@ -5,6 +5,10 @@
 Sniffer is a mobile for Andriod application that will allow users to scan networks for devices and get priliminary information on the devices.
 
 ## Final Installation Instructions:
+Installation Instructions:
+ Requirements: 
+  Device - Android Smart Phone
+  Operating System - Android 9 and below
 
 1) Open your Android phone’s browser and go to: https://github.com/Jcherella/SnifferApp and download the file named “app-release.apk”. 
 2) Your phone will ask your permission to allow apps from outside sources. You turn this feature on and it will download and become a runnable app after installing. It is advised that after the app is downloaded you turn the permission back off for security reasons.
