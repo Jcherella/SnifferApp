@@ -4,7 +4,13 @@
 
 Sniffer is a mobile for Andriod and IOS application that will allow users to scan networks for devices and get priliminary information on the devices. It will attempt to figure out the Company who constructed them and model of device.
 
-## Getting Started
+## Final Installation Instructions:
+
+1) Open your Android phone’s browser and go to: https://github.com/Jcherella/SnifferApp and download the file named “app-release.apk”. 
+2) Your phone will ask your permission to allow apps from outside sources. You turn this feature on and it will download and become a runnable app after installing. It is advised that after the app is downloaded you turn the permission back off for security reasons.
+3) All you need to do is find the app icon and select it and the app will run.
+
+## Getting Started For Developers
 
 This project is a starting point for a Flutter application.
 
