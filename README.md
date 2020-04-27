@@ -6,7 +6,8 @@ Sniffer is a mobile for Andriod application that will allow users to scan networ
 
 ## Final Installation Instructions:
 Installation Instructions:
- Requirements: 
+
+Requirements: 
   Device - Android Smart Phone,
   Operating System - Android 9 and below
 
