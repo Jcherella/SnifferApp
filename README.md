@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/Jcherella/SnifferApp/workflows/CI/badge.svg)
 
-Sniffer is a mobile for Andriod and IOS application that will allow users to scan networks for devices and get priliminary information on the devices. It will attempt to figure out the Company who constructed them and model of device.
+Sniffer is a mobile for Andriod application that will allow users to scan networks for devices and get priliminary information on the devices.
 
 ## Final Installation Instructions:
 
